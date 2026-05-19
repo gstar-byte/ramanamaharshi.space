@@ -12,7 +12,7 @@
     <link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/">
     <link rel="alternate" hreflang="en" href="https://ramanamaharshi.space/en/">
 
-    <title>Ramana Maharshi Knowledge Base | Complete Spiritual Teachings Guide</title>
+    <title>Ramana Maharshi Knowledge Base | Sri Ramana KB</title>
 
     <!-- Open Graph -->
     <meta property="og:title" content="Ramana Maharshi Knowledge Base | Complete Spiritual Teachings Guide">
@@ -33,10 +33,20 @@
       gtag('config', 'G-MYFWHFPSYB');
     </script>
 
-    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="../styles.min.css">
     <style>
         .content-wrapper { margin-top: 60px !important; }
     </style>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MYFWHFPSYB');
+</script>
+
+<link rel="manifest" href="../manifest.json">
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -121,7 +131,11 @@
                 </nav>
             </header>
 
-        <div class="content-wrapper">
+        
+<nav class="breadcrumb">
+  <a href="../index.html">Home</a> / <span class="current-page">Ramana Maharshi Knowledge Base | Complete Spiritual Teachings Guide</span>
+</nav>
+<div class="content-wrapper">
             <header class="page-header">
                 <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:22px;opacity:0.6;">The universally acknowledged last great saint of our era</p>
                 <h1>🙏 Sri Ramana Maharshi</h1>
@@ -312,51 +326,9 @@
             doSearch(e.target.value);
         });
     </script>
-    <script src="bundle.min.js" defer></script>
+    <script src="../bundle.min.js" defer> defer></script>
 
-    <style>
-        /* 确保侧边栏布局正确 */
-        :root {
-            --sidebar-w: 280px !important;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: var(--sidebar-w);
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-        }
-        .main-content {
-            margin-left: var(--sidebar-w);
-        }
-        .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .content-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-        .lang-toggle {
-            padding: 4px 8px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 13px;
-        }
-        .lang-toggle:hover {
-            color: #fff;
-        }
-
-
-.sidebar.desktop-hidden{transform:translateX(-100%) !important;transition:transform .3s ease;}
-.main-content.full-width{margin-left:0 !important;max-width:100vw !important;transition:margin-left .3s ease;}
-.main-content.full-width .topbar{left:0 !important;width:100% !important;}
-.main-content.full-width .content-wrapper,.main-content.full-width main{max-width:100% !important;}
-    </style>
+    
 <script>
 (function(){
   document.addEventListener('click',function(e){
@@ -366,24 +338,7 @@
     });
     if(dd) dd.classList.toggle('open');
   });
-  document.addEventListener('click',function(e){
-    if(e.target.closest('.sidebar-close-btn,.sidebar-open-btn')){
-      e.preventDefault();
-      var s=document.getElementById('sidebar'),m=document.querySelector('.main-content'),t=document.querySelector('.topbar'),b=document.querySelector('.sidebar-close-btn');
-      if(!s)return;
-      if(s.classList.contains('desktop-hidden')){
-        s.classList.remove('desktop-hidden');
-        if(m)m.classList.remove('full-width');
-        if(t)t.classList.remove('reading-mode');
-        if(b){b.textContent='◀';b.title='Collapse sidebar';}
-      }else{
-        s.classList.add('desktop-hidden');
-        if(m)m.classList.add('full-width');
-        if(t)t.classList.add('reading-mode');
-        if(b){b.textContent='▶';b.title='Expand sidebar';}
-      }
-    }
-  });
+  
   function toggleSidebar(){
     var s=document.getElementById('sidebar'),o=document.getElementById('sidebarOverlay');
     if(!s)return;
@@ -394,5 +349,11 @@
   window.toggleSidebar=toggleSidebar;
 })();
 </script>
+
+<footer class="site-footer">
+  <p>© 2026 Ramana Maharshi Knowledge Base | Heritage of Arunachala</p>
+</footer>
+
+
 </body>
 </html>

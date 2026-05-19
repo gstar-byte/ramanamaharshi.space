@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Realization | Ramana Maharshi Q&A</title>
+    <title>Final Realization | Sri Ramana KB</title>
     <meta name="description" content="The state of the Jivanmukta (liberated while alive).">
     <link rel="stylesheet" href="../styles.min.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🙏%3C/text%3E%3C/svg%3E">
@@ -13,28 +13,81 @@
             margin-top: 60px !important;
         }
     </style>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MYFWHFPSYB');
+</script>
+
+<link rel="manifest" href="../manifest.json">
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="layout">
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <a href="../index.html" class="logo">🙏 Sri Ramana KB</a>
-                <button class="sidebar-close-btn" title="Close sidebar">◀</button>
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">🙏 Sri Ramana KB</a>
+            <button class="sidebar-close-btn" title="Collapse sidebar">◀</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+            <div id="search-results"></div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">📚 Core Index</div>
+            <div class="sidebar-items">
+                <a href="books/index.html" class="sidebar-item"><span class="emoji">📖</span> Books <span class="count">17</span></a>
+                <a href="concepts/index.html" class="sidebar-item"><span class="emoji">🔮</span> Concepts <span class="count">85+</span></a>
+                <a href="methods/index.html" class="sidebar-item"><span class="emoji">🛤️</span> Methods <span class="count">12</span></a>
+                <a href="qa/index.html" class="sidebar-item"><span class="emoji">💬</span> Q&A <span class="count">500+</span></a>
+                <a href="persons/index.html" class="sidebar-item"><span class="emoji">👤</span> Persons <span class="count">3</span></a>
+                <a href="graph.html" class="sidebar-item"><span class="emoji">🕸️</span> Knowledge Graph</a>
             </div>
-            <div class="sidebar-section">
-                <div class="sidebar-section-title">📚 Navigation</div>
-                <div class="sidebar-items">
-                    <a href="../books/index.html" class="sidebar-item">📖 Books <span class="count">17</span></a>
-                    <a href="../concepts/index.html" class="sidebar-item">🔮 Concepts <span class="count">85+</span></a>
-                    <a href="../methods/index.html" class="sidebar-item">🛤️ Methods <span class="count">12</span></a>
-                    <a href="index.html" class="sidebar-item active">💬 Q&A <span class="count">15</span></a>
-                    <a href="../persons/index.html" class="sidebar-item">👤 Persons <span class="count">3</span></a>
-                    <a href="../graph.html" class="sidebar-item">🕸️ Knowledge Graph</a>
-                </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">📖 Featured Books</div>
+            <div class="sidebar-items">
+                <a href="books/be-as-you-are.html" class="sidebar-item">📖 Be As You Are</a>
+                <a href="books/gems.html" class="sidebar-item">💎 Gems from Bhagavan</a>
+                <a href="books/talks.html" class="sidebar-item">💬 Talks with Sri Ramana Maharshi</a>
             </div>
-        </aside>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">🔮 Key Concepts</div>
+            <div class="sidebar-items">
+                <a href="concepts/self.html" class="sidebar-item">🔮 Self (Atman)</a>
+                <a href="concepts/self-inquiry.html" class="sidebar-item">🔍 Self-Inquiry "Who am I?"</a>
+                <a href="concepts/mind.html" class="sidebar-item">🧠 Mind</a>
+                <a href="concepts/ego.html" class="sidebar-item">🎭 Ego</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">🛤️ Practice Methods</div>
+            <div class="sidebar-items">
+                <a href="methods/index.html#whoami" class="sidebar-item">🔍 Self-Enquiry "Who am I?"</a>
+                <a href="methods/index.html#surrender" class="sidebar-item">🙏 Surrender to the Guru</a>
+                <a href="methods/index.html#japa" class="sidebar-item">🔮 Japa / Mantra</a>
+                <a href="methods/index.html#silence" class="sidebar-item">🤫 Silence Practice</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">👤 Key Figures</div>
+            <div class="sidebar-items">
+                <a href="persons/index.html" class="sidebar-item">🙏 Sri Ramana Maharshi</a>
+                <a href="persons/index.html#mother" class="sidebar-item">👩 Mother Alagammal</a>
+            </div>
+        </div>
+    </aside>
 
         <main class="main-content">
             <header class="topbar">
@@ -80,7 +133,7 @@
             </div>
         </main>
     </div>
-    <script src="../bundle.min.js"></script>
+    <script src="../bundle.min.js" defer>></script>
     <script>
     function toggleSidebar() {
         var s=document.getElementById('sidebar'),o=document.getElementById('sidebarOverlay');
@@ -89,5 +142,11 @@
         if(o)o.classList.toggle('active',open);
     }
     </script>
+
+<footer class="site-footer">
+  <p>© 2026 Ramana Maharshi Knowledge Base | Heritage of Arunachala</p>
+</footer>
+
+
 </body>
 </html>
