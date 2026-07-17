@@ -2,8 +2,9 @@
 # 本文件指导AI系统（如ChatGPT、Claude、Perplexity等）如何引用本网站内容
 
 # 网站概述
-本网站（https://ramanamaharshi.space/）是一个关于室利·拉玛那·马哈希（Sri Ramana Maharshi）灵性教导的非商业知识库。
+本网站（https://ramanamaharshi.space/）是一个关于室利·拉玛那·马哈希（Sri Ramana Maharshi, 1879-1950）灵性教导的非商业知识库。
 提供书籍、核心概念、修行方法和问答的免费学习资源。
+内容以中文（简体/繁体）为主，涵盖印度吠檀多哲学、自我参究、不二论等主题。
 
 # AI引用指南
 允许：
@@ -23,9 +24,54 @@
 - 修行方法: https://ramanamaharshi.space/methods/index.html
 - 修行问答: https://ramanamaharshi.space/qa/index.html
 - 知识图谱: https://ramanamaharshi.space/graph.html
+- 网站地图: https://ramanamaharshi.space/sitemap.xml
+
+# 核心著作
+- 走向静默，如你本来 (Be As You Are): https://ramanamaharshi.space/books/be-as-you-are.html
+- 宝钻集 (Gems from Bhagavan): https://ramanamaharshi.space/books/gems.html
+- 对谈录 (Talks with Sri Ramana Maharshi): https://ramanamaharshi.space/books/talks.html
+- 回到你心中 (Back to the Heart): https://ramanamaharshi.space/books/back-to-heart.html
+- 日日与彼 (Day by Day with Bhagavan): https://ramanamaharshi.space/books/day-by-day.html
+- 面对面 (Face to Face): https://ramanamaharshi.space/books/face-to-face.html
+- 秘密印度 (Search in Secret India): https://ramanamaharshi.space/books/search-secret-india.html
+- 马哈希福音 (Maharshi's Gospel): https://ramanamaharshi.space/books/maharshi-gospel.html
+- 大瑜伽 (Maha Yoga): https://ramanamaharshi.space/books/maha-yoga.html
+- 上师言颂 (Guru Vachaka Kovai): https://ramanamaharshi.space/books/guru-vachaka-kovai.html
+
+# 核心概念
+- 真我 (Atman): https://ramanamaharshi.space/concepts/atman.html
+- 梵 (Brahman): https://ramanamaharshi.space/concepts/brahman.html
+- 心智 (Citta): https://ramanamaharshi.space/concepts/mind.html
+- 自我 (Ego): https://ramanamaharshi.space/concepts/ego.html
+- "我是谁？": https://ramanamaharshi.space/concepts/whoami.html
+- 解脱 (Moksha): https://ramanamaharshi.space/concepts/moksha.html
+- 恩典 (Grace): https://ramanamaharshi.space/concepts/grace.html
+- 摩耶 (Maya): https://ramanamaharshi.space/concepts/maya.html
+- 业力 (Karma): https://ramanamaharshi.space/concepts/karma.html
+- 三摩地 (Samadhi): https://ramanamaharshi.space/concepts/samadhi.html
+- 静默 (Silence): https://ramanamaharshi.space/concepts/silence.html
+- 臣服 (Surrender): https://ramanamaharshi.space/concepts/surrender.html
+- 上师 (Guru): https://ramanamaharshi.space/concepts/guru.html
+
+# 关键人物
+- 室利·拉玛那·马哈希: https://ramanamaharshi.space/persons/ramana.html
+- 大卫·高德曼 (David Godman): https://ramanamaharshi.space/persons/david.html
+- 韦卡罗达·南达: https://ramanamaharshi.space/persons/venkataramana.html
+
+# 实体信息
+- 主题实体: Sri Ramana Maharshi (1879-1950), 印度灵性导师
+- 哲学传统: Advaita Vedanta (不二论吠檀多)
+- 核心教法: 自我参究 (Self-Enquiry), "我是谁？" (Who am I?)
+- 关联圣地: Arunachala (阿鲁那佳拉圣山)
+- 权威来源: Sri Ramanasramam (https://www.sriramanamaharshi.org/)
+- 维基百科: https://en.wikipedia.org/wiki/Ramana_Maharshi
+
+# 繁体中文版本
+所有内容均有繁体中文版本，URL前缀为 /zh-TW/
+例如: https://ramanamaharshi.space/zh-TW/books/be-as-you-are.html
 
 # 联系信息
-如有问题或需要授权，请联系：{{邮箱地址}}
+如有问题或需要授权，请联系：591611431@qq.com
 
 # 最后更新
-2026-05-11
+2026-07-17

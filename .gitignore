@@ -1,0 +1,7 @@
+node_modules/
+ebooks/
+.wrangler/
+*.bak
+ramana-kb/
+ramana-kb-1/
+pages/ramana-kb/

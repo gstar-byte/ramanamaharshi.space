@@ -5,8 +5,8 @@ const CACHE_NAME = 'ramana-kb-v13';
 const CORE_ASSETS = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/app.js',
+  '/styles.min.css',
+  '/bundle.min.js',
   '/manifest.json'
 ];
 

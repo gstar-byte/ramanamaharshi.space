@@ -1,0 +1,13 @@
+/zh-TW/sitemap.xml /sitemap.xml 301
+/books/ /books/index.html 301
+/qa/ /qa/index.html 301
+/persons/ /persons/index.html 301
+/concepts/ /concepts/index.html 301
+/methods/ /methods/index.html 301
+/zh-TW/books/ /zh-TW/books/index.html 301
+/zh-TW/qa/ /zh-TW/qa/index.html 301
+/zh-TW/persons/ /zh-TW/persons/index.html 301
+/zh-TW/concepts/ /zh-TW/concepts/index.html 301
+/zh-TW/methods/ /zh-TW/methods/index.html 301
+https://www.ramanamaharshi.space/* https://ramanamaharshi.space/:splat 301
+http://www.ramanamaharshi.space/* https://ramanamaharshi.space/:splat 301
