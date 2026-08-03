@@ -362,38 +362,11 @@
                 </div>
             </div>
             
-            <!-- 打赏按钮 -->
-            <div class="donation-section">
-                <button class="donation-toggle" id="donationToggle" onclick="openDonation()">
-                    <span class="donation-icon">🙏</span>
-                    <span>支持本站</span>
-                </button>
-            </div>
-
-            <!-- 打赏弹窗 -->
-            <div class="donation-modal-backdrop" id="donationBackdrop" onclick="closeDonation()">
-                <div class="donation-modal" onclick="event.stopPropagation()">
-                    <button class="donation-modal-close" onclick="closeDonation()" aria-label="关闭">✕</button>
-                    <h3 class="donation-modal-title">🙏 支持本站</h3>
-                    <p class="donation-hint">本站纯属公益，不以盈利为目的，亦不设置任何商业变现。<br>如对您的修行或学习有所帮助，欢迎随心打赏，支持服务器、域名费用及作者的持续维护。感恩 ❤️</p>
-                    <div class="donation-qr-wrap">
-                        <div class="donation-qr-card">
-                            <img src="images/Weixin Image_20260803131407_296_49.jpg" alt="支付宝收款码" class="donation-qr-img">
-                            <div class="donation-qr-label alipay-label">支付宝</div>
-                        </div>
-                        <div class="donation-qr-card">
-                            <img src="images/Weixin Image_20260803131408_297_49.jpg" alt="微信收款码" class="donation-qr-img">
-                            <div class="donation-qr-label wechat-label">微信支付</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <footer class="site-footer">
                 <p><a href="index.html">拉玛那马哈希</a> | 传承自印度阿鲁那佳拉圣山</p>
                 <p style="margin-top:0.5rem;font-size:0.85rem;">本知识库整合了18本核心著作，涵盖问答、语录、日记、传记等多种形式</p>
                 <p style="margin-top:0.5rem; font-size:0.9rem; color: var(--text-muted);">© 2026 拉玛那马哈希. 保留所有权利。</p>
-                <p style="margin-top:1rem; font-size:0.9rem;"><a href="sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 网站地图</a> <span style="margin: 0 1rem;">|</span> <a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">联系我</a></p>
+                <p style="margin-top:1rem; font-size:0.9rem;"><a href="sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 网站地图</a> <span style="margin: 0 1rem;">|</span> <a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">联系我</a> <span style="margin: 0 1rem;">|</span> <a href="#" id="donationBtn" onclick="openDonation();return false;" style="color: var(--text-muted); text-decoration: underline;">🙏 支持本站</a></p>
             </footer>
         </main>
     </div>
@@ -403,11 +376,13 @@
     <script>
         // 打赏弹窗
         function openDonation() {
-            document.getElementById('donationBackdrop').classList.add('open');
+            var el = document.getElementById('donationBackdrop');
+            el.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
         function closeDonation() {
-            document.getElementById('donationBackdrop').classList.remove('open');
+            var el = document.getElementById('donationBackdrop');
+            el.style.display = 'none';
             document.body.style.overflow = '';
         }
         document.addEventListener('keydown', function(e) {
@@ -625,6 +600,25 @@
   }
 })();
 </script>
+
+<!-- 打赏弹窗（放在 body 末尾，脱离所有布局容器） -->
+<div id="donationBackdrop" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;" onclick="if(event.target===this)closeDonation()">
+    <div style="position:relative;background:#fff;border-radius:16px;padding:2rem;max-width:400px;width:88%;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;animation:slideUp .25s ease;">
+        <button onclick="closeDonation()" aria-label="关闭" style="position:absolute;top:.7rem;right:.8rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:#888;line-height:1;">✕</button>
+        <h3 style="margin:0 0 .6rem;font-size:1rem;">🙏 支持本站</h3>
+        <p style="font-size:.8rem;color:#888;line-height:1.6;margin-bottom:1.2rem;">本站纯属公益，不以盈利为目的，亦不设置任何商业变现。<br>如对您有所帮助，欢迎随心打赏，支持服务器、域名费用及作者的持续维护。感恩 ❤️</p>
+        <div style="display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.8rem;border:1px solid #eee;border-radius:10px;">
+                <img src="images/Weixin Image_20260803131407_296_49.jpg" alt="支付宝收款码" style="width:110px;height:auto;border-radius:6px;display:block;">
+                <span style="font-size:.75rem;font-weight:600;background:#E8F4FF;color:#0070e0;padding:.15rem .7rem;border-radius:999px;">支付宝</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.8rem;border:1px solid #eee;border-radius:10px;">
+                <img src="images/Weixin Image_20260803131408_297_49.jpg" alt="微信收款码" style="width:110px;height:auto;border-radius:6px;display:block;">
+                <span style="font-size:.75rem;font-weight:600;background:#E8F9EE;color:#07c160;padding:.15rem .7rem;border-radius:999px;">微信支付</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
