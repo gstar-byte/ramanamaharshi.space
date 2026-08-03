@@ -749,6 +749,109 @@ main,
 .site-footer a { color: var(--link); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 
+/* ===== 打赏组件 ===== */
+.donation-section {
+    margin: 2.5rem auto 1rem;
+    max-width: 560px;
+    text-align: center;
+}
+
+.donation-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    background: var(--card-bg, #fff);
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.donation-toggle:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 12px rgba(99,102,241,.15);
+    transform: translateY(-1px);
+}
+.donation-toggle[aria-expanded="true"] .donation-arrow {
+    display: inline-block;
+    transform: rotate(180deg);
+    transition: transform 0.25s;
+}
+.donation-arrow {
+    font-size: 0.75rem;
+    transition: transform 0.25s;
+    color: var(--text2);
+}
+
+.donation-panel {
+    display: none;
+    margin-top: 1.2rem;
+    animation: fadeUp .35s ease forwards;
+}
+.donation-panel.open { display: block; }
+
+.donation-hint {
+    font-size: 0.85rem;
+    color: var(--text2);
+    margin-bottom: 1.2rem;
+}
+
+.donation-qr-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.donation-qr-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--card-bg, #fff);
+    border: 1.5px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.donation-qr-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
+
+.donation-qr-img {
+    width: 140px;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.donation-qr-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+}
+.alipay-label {
+    background: #E8F4FF;
+    color: #0070e0;
+}
+.wechat-label {
+    background: #E8F9EE;
+    color: #07c160;
+}
+
+@media (max-width: 480px) {
+    .donation-qr-wrap { gap: 1rem; }
+    .donation-qr-img { width: 120px; }
+}
+
+
 /* ===== 动画 ===== */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
