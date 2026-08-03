@@ -362,15 +362,20 @@
                 </div>
             </div>
             
-            <!-- 打赏区块 -->
+            <!-- 打赏按钮 -->
             <div class="donation-section">
-                <button class="donation-toggle" id="donationToggle" onclick="toggleDonation()" aria-expanded="false">
+                <button class="donation-toggle" id="donationToggle" onclick="openDonation()">
                     <span class="donation-icon">🙏</span>
                     <span>支持本站</span>
-                    <span class="donation-arrow">▾</span>
                 </button>
-                <div class="donation-panel" id="donationPanel">
-                    <p class="donation-hint">本站纯属公益，不以盈利为目的，亦不设置任何商业变现。<br>如果本站对您的修行或学习有所帮助，欢迎随心打赏，支持服务器、域名费用及作者的持续维护。感恩 ❤️</p>
+            </div>
+
+            <!-- 打赏弹窗 -->
+            <div class="donation-modal-backdrop" id="donationBackdrop" onclick="closeDonation()">
+                <div class="donation-modal" onclick="event.stopPropagation()">
+                    <button class="donation-modal-close" onclick="closeDonation()" aria-label="关闭">✕</button>
+                    <h3 class="donation-modal-title">🙏 支持本站</h3>
+                    <p class="donation-hint">本站纯属公益，不以盈利为目的，亦不设置任何商业变现。<br>如对您的修行或学习有所帮助，欢迎随心打赏，支持服务器、域名费用及作者的持续维护。感恩 ❤️</p>
                     <div class="donation-qr-wrap">
                         <div class="donation-qr-card">
                             <img src="images/Weixin Image_20260803131407_296_49.jpg" alt="支付宝收款码" class="donation-qr-img">
@@ -396,14 +401,18 @@
     
     
     <script>
-        // 打赏面板切换
-        function toggleDonation() {
-            const btn = document.getElementById('donationToggle');
-            const panel = document.getElementById('donationPanel');
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', String(!expanded));
-            panel.classList.toggle('open', !expanded);
+        // 打赏弹窗
+        function openDonation() {
+            document.getElementById('donationBackdrop').classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
+        function closeDonation() {
+            document.getElementById('donationBackdrop').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDonation();
+        });
 
         // 搜索数据索引
         const searchIndex = [
