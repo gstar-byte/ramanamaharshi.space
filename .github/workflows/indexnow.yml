@@ -1,0 +1,106 @@
+name: IndexNow 自动提交
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # 只在 pages/ 目录下内容变化时触发
+      - 'pages/**/*.html'
+      - 'pages/sitemap.xml'
+
+jobs:
+  submit-indexnow:
+    name: 提交变动 URL 到 IndexNow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 代码（含历史，用于比较变动）
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # 需要拿到上一个 commit 才能 diff
+
+      - name: 检测变动的 HTML 文件
+        id: changed
+        run: |
+          # 获取本次 push 中 pages/ 下变动（新增/修改）的 .html 文件
+          CHANGED=$(git diff --name-only --diff-filter=ACM HEAD~1 HEAD -- 'pages/**/*.html' 2>/dev/null || git diff --name-only --diff-filter=ACM HEAD^ HEAD -- 'pages/**/*.html' 2>/dev/null || true)
+
+          if [ -z "$CHANGED" ]; then
+            echo "没有 HTML 文件变动，跳过 IndexNow 提交。"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "检测到变动文件："
+            echo "$CHANGED"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+
+            # 将文件路径转换为完整 URL
+            # pages/concepts/self.html → https://ramanamaharshi.space/concepts/self.html
+            # pages/index.html → https://ramanamaharshi.space/
+            URLS=""
+            while IFS= read -r file; do
+              # 去掉 pages/ 前缀
+              path="${file#pages/}"
+              # index.html 特殊处理 → 根路径
+              if [ "$path" = "index.html" ]; then
+                url="https://ramanamaharshi.space/"
+              else
+                url="https://ramanamaharshi.space/$path"
+              fi
+              if [ -z "$URLS" ]; then
+                URLS="$url"
+              else
+                URLS="$URLS,$url"
+              fi
+            done <<< "$CHANGED"
+
+            echo "urls=$URLS" >> $GITHUB_OUTPUT
+            echo "生成的 URL 列表：$URLS"
+          fi
+
+      - name: 构建 JSON 并提交到 IndexNow
+        if: steps.changed.outputs.has_changes == 'true'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          # 将逗号分隔的 URL 转为 JSON 数组
+          IFS=',' read -ra URL_ARRAY <<< "${{ steps.changed.outputs.urls }}"
+
+          # 构建 urlList JSON
+          URL_JSON=$(printf '"%s",' "${URL_ARRAY[@]}")
+          URL_JSON="[${URL_JSON%,}]"
+
+          # 构建完整 payload
+          PAYLOAD=$(cat <<EOF
+          {
+            "host": "ramanamaharshi.space",
+            "key": "${INDEXNOW_KEY}",
+            "keyLocation": "https://ramanamaharshi.space/${INDEXNOW_KEY}.txt",
+            "urlList": ${URL_JSON}
+          }
+          EOF
+          )
+
+          echo "提交 payload："
+          echo "$PAYLOAD" | python3 -m json.tool
+
+          # 发送 POST 请求
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$PAYLOAD")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+
+          echo "响应状态码：$HTTP_CODE"
+          echo "响应内容：$BODY"
+
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ IndexNow 提交成功！共提交 ${#URL_ARRAY[@]} 条 URL。"
+          elif [ "$HTTP_CODE" = "202" ]; then
+            echo "✅ IndexNow 已接受请求（HTTP 202）。"
+          else
+            echo "❌ 提交失败，HTTP $HTTP_CODE"
+            exit 1
+          fi
