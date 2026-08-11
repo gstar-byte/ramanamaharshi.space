@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """
-增强版 sitemap.xml 生成器
-- 添加 lastmod (今日日期)
-- 添加 priority (按页面层级)
-- 添加 changefreq
-- 确保所有 URL 与实际可访问的页面一致（保留 .html 后缀）
-- 每条 URL 添加 xhtml:link hreflang（zh-CN / zh-TW）；整站仅此一份 XML 站点地图（含 /zh-TW 下页面）
+模块化 Sitemap Index 站长 XML 地图生成器
+- 自动按类别生成 sitemap-main.xml, sitemap-books.xml, sitemap-concepts.xml, sitemap-methods.xml, sitemap-qa.xml, sitemap-persons.xml, sitemap-zh-tw.xml
+- 生成主入口 sitemap.xml (Sitemap Index 架构)
+- 引入 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?> 实现网页版精美渲染展示
 """
 import os
 import re
@@ -17,12 +15,37 @@ BASE_URL = "https://ramanamaharshi.space"
 ZH_TW_ROOT = "/zh-TW"
 TODAY = date.today().strftime("%Y-%m-%d")
 
+# 子地图分类规则与中英文映射
+SITEMAP_GROUPS = {
+    'sitemap-main.xml': '核心主要页面',
+    'sitemap-books.xml': '书籍与章节',
+    'sitemap-concepts.xml': '灵性概念',
+    'sitemap-methods.xml': '参究方法',
+    'sitemap-qa.xml': '问答集合',
+    'sitemap-persons.xml': '关联人物',
+    'sitemap-zh-tw.xml': '繁體中文專區',
+}
+
+def classify_rel_path(rel_path):
+    """根据相对路径判断归属哪个子地图文件"""
+    p = rel_path.replace('\\', '/')
+    if p.startswith('zh-TW/'):
+        return 'sitemap-zh-tw.xml'
+    elif p.startswith('books/'):
+        return 'sitemap-books.xml'
+    elif p.startswith('concepts/'):
+        return 'sitemap-concepts.xml'
+    elif p.startswith('methods/'):
+        return 'sitemap-methods.xml'
+    elif p.startswith('qa/'):
+        return 'sitemap-qa.xml'
+    elif p.startswith('persons/'):
+        return 'sitemap-persons.xml'
+    else:
+        return 'sitemap-main.xml'
 
 def hreflang_urls(url_path):
-    """
-    根据站点路径返回 (zh-CN 完整 URL, zh-TW 完整 URL)。
-    url_path 形如 /、/books/x.html、/zh-TW/...（与 get_url_and_priority 输出一致）。
-    """
+    """根据站点路径返回 (zh-CN 完整 URL, zh-TW 完整 URL)"""
     if url_path.startswith(f"{ZH_TW_ROOT}/"):
         rest = url_path[len(f"{ZH_TW_ROOT}/") :]
         if rest in ("", "index.html"):
@@ -30,7 +53,6 @@ def hreflang_urls(url_path):
         else:
             cn_path = f"/{rest}"
         cn_full = f"{BASE_URL}/" if cn_path == "/" else f"{BASE_URL}{cn_path}"
-        # 繁體首頁 hreflang 使用 /zh-TW/（與站內慣例一致）
         if rest in ("", "index.html"):
             tw_full = f"{BASE_URL}{ZH_TW_ROOT}/"
         else:
@@ -47,27 +69,24 @@ def hreflang_urls(url_path):
     return cn_full, tw_full
 
 def get_url_and_priority(rel_path):
-    """从相对路径生成 URL 和优先级（保留 .html 后缀）"""
-    # 统一使用正斜杠
+    """从相对路径生成 URL 和优先级"""
     p = rel_path.replace('\\', '/')
     
-    # 修正 index.html 页面
     if p == 'index.html':
         return '/', 1.0, 'weekly'
     
-    # 计算优先级
     depth = p.count('/')
     basename = os.path.basename(p)
     
-    if depth == 0:  # 顶级页面（graph.html等）
+    if depth == 0:
         priority = 0.8
         freq = 'monthly'
-    elif depth == 1:  # 二级页面
+    elif depth == 1:
         if 'ch' in basename or re.match(r'qa-\d+', basename):
-            priority = 0.6  # 章节页面
+            priority = 0.6
             freq = 'monthly'
         else:
-            priority = 0.8  # 列表/详情页面
+            priority = 0.8
             freq = 'monthly'
     else:
         priority = 0.5
@@ -75,38 +94,10 @@ def get_url_and_priority(rel_path):
     
     return f'/{p}', priority, freq
 
-def main():
-    # 收集所有 HTML 文件
-    html_files = glob.glob(os.path.join(PAGES_DIR, '**', '*.html'), recursive=True)
-    
-    # 排除不需要在 sitemap 中的文件
-    exclude_patterns = {
-        '_template.html',
-        'sitemap.html',  # sitemap HTML 版本不需要
-        'index_fixed.html',  # 临时修复文件不需要
-        'index.html.backup',  # 备份文件不需要
-    }
-    
-    urls = []
-    for fp in sorted(html_files):
-        bn = os.path.basename(fp)
-        if bn in exclude_patterns:
-            continue
-        
-        rel = os.path.relpath(fp, PAGES_DIR)
-        url_path, priority, freq = get_url_and_priority(rel)
-        
-        urls.append((url_path, priority, freq))
-    
-    # 排序：首页第一，然后按优先级降序，同优先级按路径排序
-    urls.sort(key=lambda x: (-x[1], x[0]))
-    
-    # 生成 sitemap.xml
+def generate_child_sitemap(filename, urls):
+    """生成子模块 XML Sitemap"""
     lines = ['<?xml version="1.0" encoding="UTF-8"?>']
-    lines.append(
-        "<!-- 供搜索引擎抓取。人类可读、带版式的索引页："
-        f"{BASE_URL}/sitemap.html（简体）与 {BASE_URL}/zh-TW/sitemap.html（繁体） -->"
-    )
+    lines.append('<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>')
     lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"')
     lines.append('        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
     lines.append('        xmlns:xhtml="http://www.w3.org/1999/xhtml"')
@@ -127,15 +118,72 @@ def main():
     
     lines.append('</urlset>')
     
-    sitemap_content = '\n'.join(lines) + '\n'
+    out_path = os.path.join(PAGES_DIR, filename)
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines) + '\n')
     
-    sitemap_path = os.path.join(PAGES_DIR, 'sitemap.xml')
-    with open(sitemap_path, 'w', encoding='utf-8') as f:
-        f.write(sitemap_content)
+    print(f'   ├─ {filename}: {len(urls)} 条链接')
+
+def generate_index_sitemap(sitemap_files):
+    """生成 Sitemap Index 主入口 (sitemap.xml)"""
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>']
+    lines.append('<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>')
+    lines.append('<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     
-    print(f'✅ 生成 sitemap.xml: {len(urls)} 个 URL')
-    print(f'   日期: {TODAY}')
-    print(f'   路径: {sitemap_path}')
+    for filename in sitemap_files:
+        lines.append('  <sitemap>')
+        lines.append(f'    <loc>{BASE_URL}/{filename}</loc>')
+        lines.append(f'    <lastmod>{TODAY}</lastmod>')
+        lines.append('  </sitemap>')
+    
+    lines.append('</sitemapindex>')
+    
+    index_path = os.path.join(PAGES_DIR, 'sitemap.xml')
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines) + '\n')
+    
+    print(f'   └─ sitemap.xml (Sitemap Index): 包含 {len(sitemap_files)} 个子地图')
+
+def main():
+    print(f"🚀 开始生成模块化 XML Sitemap ({TODAY})...\n")
+
+    html_files = glob.glob(os.path.join(PAGES_DIR, '**', '*.html'), recursive=True)
+    
+    exclude_patterns = {
+        '_template.html',
+        'sitemap.html',
+        'sitemap-v2.html',
+        'sitemap-test.html',
+        'index_fixed.html',
+        'index.html.backup',
+    }
+    
+    groups = {key: [] for key in SITEMAP_GROUPS.keys()}
+    total_count = 0
+
+    for fp in sorted(html_files):
+        bn = os.path.basename(fp)
+        if bn in exclude_patterns:
+            continue
+        
+        rel = os.path.relpath(fp, PAGES_DIR)
+        url_path, priority, freq = get_url_and_priority(rel)
+        group_key = classify_rel_path(rel)
+        
+        if group_key in groups:
+            groups[group_key].append((url_path, priority, freq))
+            total_count += 1
+
+    active_sitemaps = []
+    for filename, urls in groups.items():
+        if len(urls) > 0:
+            urls.sort(key=lambda x: (-x[1], x[0]))
+            generate_child_sitemap(filename, urls)
+            active_sitemaps.append(filename)
+
+    generate_index_sitemap(active_sitemaps)
+
+    print(f"\n✅ 成功生成模块化 XML Sitemap，全站共记 {total_count} 条页面映射！")
 
 if __name__ == '__main__':
     main()
