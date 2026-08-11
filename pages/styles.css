@@ -1830,3 +1830,288 @@ body .lang-toggle,
         font-size: 17px !important;
     }
 }
+
+/* ============================================
+   音频朗读控件 (Audio Reader / TTS)
+   ============================================ */
+
+/* 正文段落实时朗读高亮 */
+.tts-highlighting {
+    background-color: rgba(212, 168, 67, 0.18) !important;
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.25) !important;
+    border-radius: 6px !important;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
+    padding: 2px 4px !important;
+}
+
+/* 页面顶部朗读操作按钮条 */
+.tts-header-bar {
+    margin: 1rem 0 1.5rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.tts-play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #1A2332 0%, #2C3E50 100%);
+    color: #FAF7F2;
+    border: 1px solid rgba(184, 134, 11, 0.4);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.15);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-play-btn:hover {
+    background: linear-gradient(135deg, #2C3E50 0%, #3a506b 100%);
+    border-color: var(--gold-light, #D4A843);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(184, 134, 11, 0.25);
+}
+
+.tts-play-btn .tts-icon {
+    font-size: 16px;
+}
+
+.tts-play-btn .tts-meta {
+    font-size: 12px;
+    color: rgba(250, 247, 242, 0.7);
+    font-weight: normal;
+}
+
+/* 底部悬浮播放器 */
+.tts-floating-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: 780px;
+    margin: 0 auto;
+    background: rgba(26, 35, 50, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(184, 134, 11, 0.35);
+    border-radius: 16px;
+    padding: 12px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(184, 134, 11, 0.15);
+    z-index: 9999;
+    color: #FAF7F2;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-floating-player.tts-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px);
+}
+
+.tts-player-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.tts-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.tts-badge {
+    background: rgba(184, 134, 11, 0.25);
+    color: #D4A843;
+    border: 1px solid rgba(184, 134, 11, 0.4);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.tts-current-text {
+    font-size: 13px;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+}
+
+.tts-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tts-ctrl-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.tts-ctrl-btn:hover {
+    background: rgba(184, 134, 11, 0.3);
+    border-color: #B8860B;
+    transform: scale(1.05);
+}
+
+.tts-ctrl-btn.tts-main-toggle {
+    width: 40px;
+    height: 40px;
+    background: #B8860B;
+    border-color: #D4A843;
+    color: #1A2332;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.tts-ctrl-btn.tts-main-toggle:hover {
+    background: #D4A843;
+    transform: scale(1.1);
+}
+
+.tts-progress-container {
+    flex: 1 1 100%;
+    order: 3;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.tts-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #B8860B, #D4A843);
+    border-radius: 3px;
+    transition: width 0.2s linear;
+}
+
+.tts-settings {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    position: relative;
+}
+
+.tts-speed-selector {
+    position: relative;
+}
+
+.tts-speed-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FAF7F2;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tts-speed-btn:hover {
+    background: rgba(184, 134, 11, 0.3);
+}
+
+.tts-speed-dropdown {
+    position: absolute;
+    bottom: 120%;
+    right: 0;
+    background: #1A2332;
+    border: 1px solid rgba(184, 134, 11, 0.4);
+    border-radius: 8px;
+    padding: 6px 0;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    min-width: 70px;
+    z-index: 10000;
+}
+
+.tts-speed-dropdown.tts-hidden {
+    display: none;
+}
+
+.tts-speed-dropdown span {
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #cbd5e1;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s;
+}
+
+.tts-speed-dropdown span:hover,
+.tts-speed-dropdown span.active {
+    background: rgba(184, 134, 11, 0.3);
+    color: #D4A843;
+}
+
+.tts-voice-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FAF7F2;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 140px;
+    outline: none;
+    cursor: pointer;
+}
+
+.tts-voice-select option {
+    background: #1A2332;
+    color: #FAF7F2;
+}
+
+.tts-close-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: color 0.2s;
+}
+
+.tts-close-btn:hover {
+    color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .tts-floating-player {
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        padding: 10px 14px;
+    }
+
+    .tts-current-text {
+        max-width: 140px;
+    }
+
+    .tts-voice-select {
+        display: none; /* 移动端隐藏较长的发音人列表 */
+    }
+}
+

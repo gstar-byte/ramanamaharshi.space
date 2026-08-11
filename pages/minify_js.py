@@ -51,7 +51,8 @@ def minify_file(filename):
     }
 
 # 需要压缩的 JS 文件
-files = ['script.js', 'search.js', 'pwa-analytics.js']
+files = ['script.js', 'search.js', 'audio-reader.js', 'pwa-analytics.js']
+
 
 total_original = 0
 total_minified = 0

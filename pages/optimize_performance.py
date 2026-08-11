@@ -6,7 +6,7 @@ import re
 import os
 from pathlib import Path
 
-KB01 = Path("F:/26年4月/kb01/pages")
+KB01 = Path(__file__).parent.resolve()
 
 def minify_css(css_path):
     """压缩CSS：去除注释、空格、换行"""
@@ -44,9 +44,10 @@ def minify_js(js_path):
     return content.strip() + '\n'
 
 def create_bundle_js():
-    """合并script.js和search.js为一个bundle"""
+    """合并script.js、search.js和audio-reader.js为一个bundle"""
     script_path = KB01 / "script.js"
     search_path = KB01 / "search.js"
+    audio_path = KB01 / "audio-reader.js"
 
     bundle = ""
 
@@ -56,7 +57,11 @@ def create_bundle_js():
     if search_path.exists():
         bundle += minify_js(search_path) + "\n"
 
+    if audio_path.exists():
+        bundle += minify_js(audio_path) + "\n"
+
     return bundle
+
 
 def update_html_references():
     """更新HTML文件中的JS/CSS引用"""
@@ -96,43 +101,60 @@ def update_html_references():
 
     return updated
 
+def create_bundle_js_for(dir_path):
+    """合并指定目录下的 script.js、search.js 和 audio-reader.js"""
+    script_path = dir_path / "script.js"
+    search_path = dir_path / "search.js"
+    audio_path = dir_path / "audio-reader.js"
+
+    bundle = ""
+
+    if script_path.exists():
+        bundle += minify_js(script_path) + "\n"
+
+    if search_path.exists():
+        bundle += minify_js(search_path) + "\n"
+
+    if audio_path.exists():
+        bundle += minify_js(audio_path) + "\n"
+
+    return bundle
+
 def main():
-    print("🚀 KB01 性能优化开始...")
+    print("🚀 KB01 性能优化与资源打包开始...")
 
-    # 1. 压缩CSS
-    print("\n📦 压缩CSS...")
-    css_path = KB01 / "styles.css"
-    css_size_before = css_path.stat().st_size
-    minified_css = minify_css(css_path)
+    dirs_to_process = [KB01, KB01 / "zh-TW"]
 
-    min_css_path = KB01 / "styles.min.css"
-    with open(min_css_path, 'w', encoding='utf-8') as f:
-        f.write(minified_css)
+    for target_dir in dirs_to_process:
+        if not target_dir.exists():
+            continue
 
-    css_size_after = min_css_path.stat().st_size
-    print(f"   styles.css: {css_size_before:,} → {css_size_after:,} bytes ({100*css_size_after/css_size_before:.1f}%)")
-    print(f"   节省: {css_size_before - css_size_after:,} bytes ({(1-css_size_after/css_size_before)*100:.1f}%)")
+        print(f"\n📂 处理目录: {target_dir}")
 
-    # 2. 合并并压缩JS
-    print("\n📦 合并并压缩JS...")
-    bundle = create_bundle_js()
+        css_path = target_dir / "styles.css"
+        if css_path.exists():
+            css_size_before = css_path.stat().st_size
+            minified_css = minify_css(css_path)
+            min_css_path = target_dir / "styles.min.css"
+            with open(min_css_path, 'w', encoding='utf-8') as f:
+                f.write(minified_css)
+            css_size_after = min_css_path.stat().st_size
+            print(f"   styles.css: {css_size_before:,} → {css_size_after:,} bytes (节省 {(1-css_size_after/css_size_before)*100:.1f}%)")
 
-    bundle_path = KB01 / "bundle.min.js"
-    with open(bundle_path, 'w', encoding='utf-8') as f:
-        f.write(bundle)
+        bundle = create_bundle_js_for(target_dir)
+        if bundle.strip():
+            bundle_path = target_dir / "bundle.min.js"
+            with open(bundle_path, 'w', encoding='utf-8') as f:
+                f.write(bundle)
+            bundle_size = len(bundle.encode('utf-8'))
+            print(f"   bundle.min.js: {bundle_size:,} bytes (已合并 script.js + search.js + audio-reader.js)")
 
-    bundle_size = len(bundle.encode('utf-8'))
-    print(f"   bundle.min.js: {bundle_size:,} bytes (script.js + search.js)")
-
-    # 3. 更新HTML引用
-    print("\n🔗 更新HTML引用...")
+    print("\n🔗 更新全站HTML引用...")
     updated = update_html_references()
     print(f"   更新了 {updated} 个HTML文件")
 
-    print("\n✅ 优化完成!")
-    print(f"   CSS: {css_size_before:,} → {css_size_after:,} bytes")
-    print(f"   JS: {bundle_size:,} bytes (合并后)")
-    print(f"\n📝 注意: 请检查页面是否正常工作，如有问题可恢复原文件。")
+    print("\n✅ 全站优化完成!")
 
 if __name__ == "__main__":
     main()
+
