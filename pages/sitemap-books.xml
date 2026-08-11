@@ -6,6 +6,14 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
+    <loc>https://ramanamaharshi.space/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/"/>
+  </url>
+  <url>
     <loc>https://ramanamaharshi.space/books/back-to-heart.html</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -156,6 +164,14 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/books/timeless.html"/>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/books/timeless.html"/>
+  </url>
+  <url>
+    <loc>https://ramanamaharshi.space/graph.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/graph.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/graph.html"/>
   </url>
   <url>
     <loc>https://ramanamaharshi.space/books/back-to-heart-ch1.html</loc>

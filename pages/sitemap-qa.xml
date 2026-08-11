@@ -6,6 +6,38 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
+    <loc>https://ramanamaharshi.space/persons/david.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/persons/david.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/persons/david.html"/>
+  </url>
+  <url>
+    <loc>https://ramanamaharshi.space/persons/index.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/persons/index.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/persons/index.html"/>
+  </url>
+  <url>
+    <loc>https://ramanamaharshi.space/persons/ramana.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/persons/ramana.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/persons/ramana.html"/>
+  </url>
+  <url>
+    <loc>https://ramanamaharshi.space/persons/venkataramana.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/persons/venkataramana.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/persons/venkataramana.html"/>
+  </url>
+  <url>
     <loc>https://ramanamaharshi.space/qa/index.html</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>

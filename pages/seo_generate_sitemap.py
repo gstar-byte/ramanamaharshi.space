@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-模块化 Sitemap Index 站长 XML 地图生成器
-- 自动按类别生成 sitemap-main.xml, sitemap-books.xml, sitemap-concepts.xml, sitemap-methods.xml, sitemap-qa.xml, sitemap-persons.xml, sitemap-zh-tw.xml
-- 生成主入口 sitemap.xml (Sitemap Index 架构)
-- 引入 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?> 实现网页版精美渲染展示
+本站专属模块化 XML Sitemap 生成器
+根据拉玛那马哈希知识库体系生成 4 大核心主题地图：
+1. sitemap-books.xml   (首页、知识图谱及著作章节)
+2. sitemap-concepts.xml(灵性概念条款与实修方法)
+3. sitemap-qa.xml      (灵性问答与关联人物)
+4. sitemap-zh-tw.xml   (繁体中文专区)
+
+自动清理生硬的旧碎小 Sitemap 文件。
 """
 import os
 import re
@@ -15,34 +19,40 @@ BASE_URL = "https://ramanamaharshi.space"
 ZH_TW_ROOT = "/zh-TW"
 TODAY = date.today().strftime("%Y-%m-%d")
 
-# 子地图分类规则与中英文映射
+# 站点独有的 4 大 Sitemap 模块定义
 SITEMAP_GROUPS = {
-    'sitemap-main.xml': '核心主要页面',
-    'sitemap-books.xml': '书籍与章节',
-    'sitemap-concepts.xml': '灵性概念',
-    'sitemap-methods.xml': '参究方法',
-    'sitemap-qa.xml': '问答集合',
-    'sitemap-persons.xml': '关联人物',
-    'sitemap-zh-tw.xml': '繁體中文專區',
+    'sitemap-books.xml': '📕 著作与主页 (Books & Main)',
+    'sitemap-concepts.xml': '💡 概念与参究 (Concepts & Methods)',
+    'sitemap-qa.xml': '❓ 问答与人物 (QA & Persons)',
+    'sitemap-zh-tw.xml': '🌏 繁體中文專區 (ZH-TW Region)',
 }
 
+# 旧的需要被清理的无意义文件
+DEPRECATED_FILES = [
+    'sitemap-main.xml',
+    'sitemap-methods.xml',
+    'sitemap-persons.xml',
+]
+
 def classify_rel_path(rel_path):
-    """根据相对路径判断归属哪个子地图文件"""
+    """根据本站真实业务结构归类页面"""
     p = rel_path.replace('\\', '/')
+    
+    # 繁体专区
     if p.startswith('zh-TW/'):
         return 'sitemap-zh-tw.xml'
-    elif p.startswith('books/'):
-        return 'sitemap-books.xml'
-    elif p.startswith('concepts/'):
+    
+    # 概念与参究方法合并
+    elif p.startswith('concepts/') or p.startswith('methods/'):
         return 'sitemap-concepts.xml'
-    elif p.startswith('methods/'):
-        return 'sitemap-methods.xml'
-    elif p.startswith('qa/'):
+    
+    # 问答解答与人物介绍合并
+    elif p.startswith('qa/') or p.startswith('persons/'):
         return 'sitemap-qa.xml'
-    elif p.startswith('persons/'):
-        return 'sitemap-persons.xml'
+    
+    # 首页、图谱及所有书籍章节统一收录进 books/主分类
     else:
-        return 'sitemap-main.xml'
+        return 'sitemap-books.xml'
 
 def hreflang_urls(url_path):
     """根据站点路径返回 (zh-CN 完整 URL, zh-TW 完整 URL)"""
@@ -122,7 +132,8 @@ def generate_child_sitemap(filename, urls):
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines) + '\n')
     
-    print(f'   ├─ {filename}: {len(urls)} 条链接')
+    label = SITEMAP_GROUPS.get(filename, filename)
+    print(f'   ├─ {filename} [{label}]: {len(urls)} 条页面映射')
 
 def generate_index_sitemap(sitemap_files):
     """生成 Sitemap Index 主入口 (sitemap.xml)"""
@@ -142,10 +153,24 @@ def generate_index_sitemap(sitemap_files):
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines) + '\n')
     
-    print(f'   └─ sitemap.xml (Sitemap Index): 包含 {len(sitemap_files)} 个子地图')
+    print(f'   └─ sitemap.xml (Sitemap Index): 包含 {len(sitemap_files)} 个主主题地图文件')
+
+def cleanup_deprecated_files():
+    """清理遗留的过时 XML 文件"""
+    for old_file in DEPRECATED_FILES:
+        old_path = os.path.join(PAGES_DIR, old_file)
+        if os.path.exists(old_path):
+            try:
+                os.remove(old_path)
+                print(f'   🗑️ 已清理废弃文件: {old_file}')
+            except Exception as e:
+                print(f'   ⚠️ 清理 {old_file} 失败: {e}')
 
 def main():
-    print(f"🚀 开始生成模块化 XML Sitemap ({TODAY})...\n")
+    print(f"🚀 开始根据本站独有架构生成 XML Sitemap ({TODAY})...\n")
+
+    # 先清理废弃多余文件
+    cleanup_deprecated_files()
 
     html_files = glob.glob(os.path.join(PAGES_DIR, '**', '*.html'), recursive=True)
     
@@ -183,7 +208,7 @@ def main():
 
     generate_index_sitemap(active_sitemaps)
 
-    print(f"\n✅ 成功生成模块化 XML Sitemap，全站共记 {total_count} 条页面映射！")
+    print(f"\n✅ 成功完成定制化 XML Sitemap 生成，全站累计包含 {total_count} 个页面！")
 
 if __name__ == '__main__':
     main()

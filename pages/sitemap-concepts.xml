@@ -654,6 +654,14 @@
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/concepts/yoga.html"/>
   </url>
   <url>
+    <loc>https://ramanamaharshi.space/methods/index.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/methods/index.html"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/methods/index.html"/>
+  </url>
+  <url>
     <loc>https://ramanamaharshi.space/concepts/atma-vichara.html</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>

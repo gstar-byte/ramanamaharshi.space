@@ -2,10 +2,6 @@
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://ramanamaharshi.space/sitemap-main.xml</loc>
-    <lastmod>2026-08-11</lastmod>
-  </sitemap>
-  <sitemap>
     <loc>https://ramanamaharshi.space/sitemap-books.xml</loc>
     <lastmod>2026-08-11</lastmod>
   </sitemap>
@@ -14,15 +10,7 @@
     <lastmod>2026-08-11</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://ramanamaharshi.space/sitemap-methods.xml</loc>
-    <lastmod>2026-08-11</lastmod>
-  </sitemap>
-  <sitemap>
     <loc>https://ramanamaharshi.space/sitemap-qa.xml</loc>
-    <lastmod>2026-08-11</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://ramanamaharshi.space/sitemap-persons.xml</loc>
     <lastmod>2026-08-11</lastmod>
   </sitemap>
   <sitemap>
