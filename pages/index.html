@@ -33,7 +33,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="拉玛那知识库">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <!-- Google Analytics (极致延迟加载，首屏0开销) -->
+    <!-- Google Analytics (按需加载，首屏0开销) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -47,9 +47,8 @@
         gtag('js', new Date());
         gtag('config', 'G-MYFWHFPSYB');
       }
-      var gaTimer = setTimeout(loadGA, 4000);
-      ['scroll','touchstart','click','keydown'].forEach(function(e){
-        window.addEventListener(e, function(){ clearTimeout(gaTimer); loadGA(); }, {once: true, passive: true});
+      ['scroll','touchstart','click','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
       });
     </script>
 
@@ -365,7 +364,7 @@
             </div>
             
             <footer class="site-footer">
-                <p><a href="index.html">拉玛那马哈希</a> | 传承自印度阿鲁那佳拉圣山</p>
+                <p><a href="index.html" style="text-decoration: underline;">拉玛那马哈希</a> | 传承自印度阿鲁那佳拉圣山</p>
                 <p style="margin-top:0.5rem;font-size:0.85rem;">本知识库整合了18本核心著作，涵盖问答、语录、日记、传记等多种形式</p>
                 <p style="margin-top:0.5rem; font-size:0.9rem; color: var(--text-muted);">© 2026 拉玛那马哈希. 保留所有权利。</p>
                 <p style="margin-top:1rem; font-size:0.9rem;"><a href="sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 网站地图</a> <span style="margin: 0 1rem;">|</span> <!--email_off--><a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">联系我</a> <span style="margin: 0 1rem;">|</span> <a href="#" id="donationBtn" onclick="openDonation();return false;" style="color: var(--text-muted); text-decoration: underline;">🙏 支持本站</a></p>

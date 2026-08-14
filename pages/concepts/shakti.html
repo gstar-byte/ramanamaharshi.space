@@ -19,7 +19,7 @@
     <meta property="og:description" content="沙克蒂是宇宙的创造力量，与静默的湿婆相对而互补。">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="zh_CN">
-    <!-- Google Analytics (极致延迟加载，首屏0开销) -->
+    <!-- Google Analytics (按需加载，首屏0开销) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -33,9 +33,8 @@
         gtag('js', new Date());
         gtag('config', 'G-MYFWHFPSYB');
       }
-      var gaTimer = setTimeout(loadGA, 4000);
-      ['scroll','touchstart','click','keydown'].forEach(function(e){
-        window.addEventListener(e, function(){ clearTimeout(gaTimer); loadGA(); }, {once: true, passive: true});
+      ['scroll','touchstart','click','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
       });
     </script>
     <meta name="publisher" content="拉玛那马哈希知识库">

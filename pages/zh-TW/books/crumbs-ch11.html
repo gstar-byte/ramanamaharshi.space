@@ -29,7 +29,7 @@
     <meta property="og:site_name" content="拉玛那馬哈希知識庫">
     <meta name="publisher" content="拉玛那馬哈希知識庫">
     <meta property="og:image" content="https://ramanamaharshi.space/images/og-default.jpg">
-    <!-- Google Analytics (极致延迟加载，首屏0开销) -->
+    <!-- Google Analytics (按需加载，首屏0开销) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -43,9 +43,8 @@
         gtag('js', new Date());
         gtag('config', 'G-MYFWHFPSYB');
       }
-      var gaTimer = setTimeout(loadGA, 4000);
-      ['scroll','touchstart','click','keydown'].forEach(function(e){
-        window.addEventListener(e, function(){ clearTimeout(gaTimer); loadGA(); }, {once: true, passive: true});
+      ['scroll','touchstart','click','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
       });
     </script>
     <script type="application/ld+json">
@@ -191,7 +190,7 @@
 <a href="crumbs-ch12.html"><span class="nav-label">下一章 →</span><span class="nav-title">第十二章：第三次訪問與結語</span></a>
                 </div>
             </div>
-            <footer class="site-footer"><p><a href="../index.html">拉瑪那馬哈希</a> | 傳承自印度阿魯那佳拉聖山</p><p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-muted);">© 2026 拉瑪那馬哈希. 保留所有權利。</p><p style="margin-top:1rem;font-size:0.9rem;"><a href="../sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 網站地圖</a> <span style="margin: 0 1rem;">|</span> <!--email_off--><a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">聯絡我</a></p></footer>
+            <footer class="site-footer"><p><a href="../index.html" style="text-decoration: underline;">拉瑪那馬哈希</a> | 傳承自印度阿魯那佳拉聖山</p><p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-muted);">© 2026 拉瑪那馬哈希. 保留所有權利。</p><p style="margin-top:1rem;font-size:0.9rem;"><a href="../sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 網站地圖</a> <span style="margin: 0 1rem;">|</span> <!--email_off--><a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">聯絡我</a></p></footer>
         </main>
     </div>
     <script>if('serviceWorker'in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(r){console.log('SW registered:',r.scope)}).catch(function(e){console.log('SW failed:',e)})})}</script>

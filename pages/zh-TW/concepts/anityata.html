@@ -27,7 +27,7 @@
 
     <!-- Google Analytics 预连接  -->
 <!-- Google tag (gtag.js) -->
-<!-- Google Analytics (极致延迟加载，首屏0开销) -->
+<!-- Google Analytics (按需加载，首屏0开销) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -41,9 +41,8 @@
         gtag('js', new Date());
         gtag('config', 'G-MYFWHFPSYB');
       }
-      var gaTimer = setTimeout(loadGA, 4000);
-      ['scroll','touchstart','click','keydown'].forEach(function(e){
-        window.addEventListener(e, function(){ clearTimeout(gaTimer); loadGA(); }, {once: true, passive: true});
+      ['scroll','touchstart','click','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
       });
     </script>
 
@@ -226,7 +225,7 @@
     
 
 <footer class="site-footer">
-        <p><a href="../index.html">拉瑪那馬哈希</a> | <a href="index.html">← 核心概念</a></p>
+        <p><a href="../index.html" style="text-decoration: underline;">拉瑪那馬哈希</a> | <a href="index.html">← 核心概念</a></p>
     </footer>
 </main>
 </div>

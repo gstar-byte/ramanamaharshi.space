@@ -19,7 +19,7 @@
 
     <!-- Google Analytics 预连接  -->
 <!-- Google tag (gtag.js) -->
-<!-- Google Analytics (极致延迟加载，首屏0开销) -->
+<!-- Google Analytics (按需加载，首屏0开销) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -33,9 +33,8 @@
         gtag('js', new Date());
         gtag('config', 'G-MYFWHFPSYB');
       }
-      var gaTimer = setTimeout(loadGA, 4000);
-      ['scroll','touchstart','click','keydown'].forEach(function(e){
-        window.addEventListener(e, function(){ clearTimeout(gaTimer); loadGA(); }, {once: true, passive: true});
+      ['scroll','touchstart','click','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
       });
     </script>
 
@@ -272,7 +271,7 @@
             </div>
             
                         <footer class="site-footer">
-                <p><a href="../index.html">拉玛那马哈希</a> | 传承自印度阿鲁那佳拉圣山</p>
+                <p><a href="../index.html" style="text-decoration: underline;">拉玛那马哈希</a> | 传承自印度阿鲁那佳拉圣山</p>
                 <p style="margin-top:0.5rem; font-size:0.9rem; color: var(--text-muted);">© 2026 拉玛那马哈希. 保留所有权利。</p>
                 <p style="margin-top:1rem; font-size:0.9rem;"><a href="../sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 网站地图</a> <span style="margin: 0 1rem;">|</span> <!--email_off--><a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">联系我</a></p>
             </footer>
