@@ -748,8 +748,8 @@ main,
     margin-top: 48px;
     font-size: 13px;
 }
-.site-footer a { color: var(--link); text-decoration: none; }
-.site-footer a:hover { text-decoration: underline; }
+.site-footer a { color: var(--link); text-decoration: underline; }
+.site-footer a:hover { opacity: 0.85; }
 
 /* ===== 打赏组件 ===== */
 .donation-section {

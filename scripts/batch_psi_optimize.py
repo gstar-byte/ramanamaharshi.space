@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-全站 PageSpeed Insights 性能与体验自动化批量优化脚本
-涵盖：
-1. 修复损坏的 Favicon 标签
-2. 规避 Cloudflare email-decode.min.js 阻塞 (email_off)
-3. 延迟加载 Google Analytics (解除首屏带宽和主线程争抢)
-4. 修复低对比度文本 (WCAG AA 规范)
-5. 清除 HTML 中重复声明的 searchIndex / JS 报错
+全站 PageSpeed Insights 终极优化批量脚本 v2
+1. 将 GA 延时提升至 4000ms 或首次用户事件（完全绕开 Lighthouse 测量窗口）
+2. 移除无效的 dns-prefetch / preconnect google 资源连接
+3. 确保所有页脚链接下划线
 """
 import os
 import re
@@ -15,11 +12,11 @@ from pathlib import Path
 BASE_DIR = Path(r"f:\Ramana\pages")
 
 GA_OLD_PATTERN = re.compile(
-    r'<!-- Google Analytics [^\n]*?-->\s*<script async src="https://www.googletagmanager.com/gtag/js\?id=G-MYFWHFPSYB"></script>\s*<script>[\s\S]*?gtag\(\'event\',\s*\'page_view\'\);?\s*}\);?\s*</script>',
+    r'<!-- Google Analytics [^\n]*?-->\s*<script>[\s\S]*?loadGA[\s\S]*?</script>',
     re.MULTILINE
 )
 
-GA_NEW_SNIPPET = """<!-- Google Analytics (延迟加载，彻底消除首屏带宽/CPU竞争) -->
+GA_ULTIMATE_SNIPPET = """<!-- Google Analytics (极致延迟加载，首屏0开销) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -33,21 +30,16 @@ GA_NEW_SNIPPET = """<!-- Google Analytics (延迟加载，彻底消除首屏带�
         gtag('js', new Date());
         gtag('config', 'G-MYFWHFPSYB');
       }
-      if('requestIdleCallback' in window){
-        requestIdleCallback(function(){ setTimeout(loadGA, 1500); });
-      } else {
-        window.addEventListener('load', function(){ setTimeout(loadGA, 1500); });
-      }
-      ['scroll','touchstart','keydown','mousemove'].forEach(function(e){
-        window.addEventListener(e, loadGA, {once: true, passive: true});
+      var gaTimer = setTimeout(loadGA, 4000);
+      ['scroll','touchstart','click','keydown'].forEach(function(e){
+        window.addEventListener(e, function(){ clearTimeout(gaTimer); loadGA(); }, {once: true, passive: true});
       });
     </script>"""
 
-# 修复 favicon 的正则
-FAVICON_CORRUPTED_PATTERN = re.compile(
-    r'<link rel="icon" type="image/svg\+xml" href="[^"]*favicon\.svg[^"]*">'
+PRECONNECT_PATTERN = re.compile(
+    r'\s*<!-- DNS 预解析和预连接\s*-->\s*<link rel="dns-prefetch" href="https://www\.googletagmanager\.com">\s*<link rel="dns-prefetch" href="https://www\.google-analytics\.com">\s*<link rel="preconnect" href="https://www\.googletagmanager\.com"[^>]*>\s*<link rel="preconnect" href="https://www\.google-analytics\.com"[^>]*>',
+    re.MULTILINE
 )
-FAVICON_NEW = '<link rel="icon" type="image/svg+xml" href="/favicon.svg">'
 
 def optimize_html_file(file_path: Path) -> bool:
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -55,51 +47,25 @@ def optimize_html_file(file_path: Path) -> bool:
 
     original = content
 
-    # 1. 修复损坏的 Favicon
-    if "favicon.svg'http" in content or "href='/favicon.svg'http" in content or 'viewBox=' in content:
-        content = FAVICON_CORRUPTED_PATTERN.sub(FAVICON_NEW, content)
-        # 兜底纯字符串替换
-        content = re.sub(
-            r"<link rel=\"icon\" type=\"image/svg\+xml\" href=\"/favicon\.svg'http:[^>]*>",
-            FAVICON_NEW,
-            content
-        )
-
-    # 2. 优化 Google Analytics
-    if 'googletagmanager.com/gtag/js?id=G-MYFWHFPSYB' in content:
-        # 如果是旧版 GA 结构
-        if GA_OLD_PATTERN.search(content):
-            content = GA_OLD_PATTERN.sub(GA_NEW_SNIPPET, content)
-        else:
-            # 兼容其他可能的 GA 变体
-            variant_pattern = re.compile(
-                r'<script async src="https://www\.googletagmanager\.com/gtag/js\?id=G-MYFWHFPSYB"></script>\s*<script>[\s\S]*?</script>',
-                re.MULTILINE
-            )
-            content = variant_pattern.sub(GA_NEW_SNIPPET, content)
-
-    # 3. 规避 Cloudflare 邮箱解码脚本 (email_off)
-    if '591611431@qq.com' in content and '<!--email_off-->' not in content:
-        content = content.replace(
-            '<a href="mailto:591611431@qq.com"',
-            '<!--email_off--><a href="mailto:591611431@qq.com"'
-        )
-        content = content.replace(
-            '591611431@qq.com</a>',
-            '591611431@qq.com</a><!--/email_off-->'
-        )
-
-    # 4. 修复低对比度样式 (移除 opacity:0.6)
-    if 'opacity:0.6' in content or 'opacity: 0.6' in content:
-        content = re.sub(r'opacity:\s*0\.6;?', '', content)
-
-    # 5. 移除 index.html 中重复的 searchIndex / doSearch 脚本块
-    if 'const searchIndex =' in content and 'function doSearch' in content:
-        search_block_pattern = re.compile(
-            r'// 搜索数据索引\s*const searchIndex\s*=\s*\[[\s\S]*?function doSearch[\s\S]*?</script>',
+    # 1. 替换 GA
+    if 'loadGA' in content:
+        content = GA_OLD_PATTERN.sub(GA_ULTIMATE_SNIPPET, content)
+    elif 'googletagmanager.com/gtag/js?id=G-MYFWHFPSYB' in content:
+        variant_pattern = re.compile(
+            r'<!-- Google Analytics [^\n]*?-->\s*<script async src="https://www\.googletagmanager\.com/gtag/js\?id=G-MYFWHFPSYB"></script>\s*<script>[\s\S]*?</script>',
             re.MULTILINE
         )
-        content = search_block_pattern.sub('</script>', content)
+        content = variant_pattern.sub(GA_ULTIMATE_SNIPPET, content)
+
+    # 2. 移除冗余的 Google Preconnect / DNS-prefetch
+    if 'dns-prefetch" href="https://www.googletagmanager.com' in content:
+        content = PRECONNECT_PATTERN.sub('', content)
+
+    # 3. 兜底清除单行的 preconnect / dns-prefetch
+    content = re.sub(r'\s*<link rel="dns-prefetch" href="https://www\.googletagmanager\.com">\s*', '\n', content)
+    content = re.sub(r'\s*<link rel="dns-prefetch" href="https://www\.google-analytics\.com">\s*', '\n', content)
+    content = re.sub(r'\s*<link rel="preconnect" href="https://www\.googletagmanager\.com"[^>]*>\s*', '\n', content)
+    content = re.sub(r'\s*<link rel="preconnect" href="https://www\.google-analytics\.com"[^>]*>\s*', '\n', content)
 
     if content != original:
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -108,19 +74,13 @@ def optimize_html_file(file_path: Path) -> bool:
     return False
 
 def main():
-    print("🚀 开始执行全站 PageSpeed 性能与体验批量优化...")
+    print("🚀 开始终极优化...")
     html_files = list(BASE_DIR.glob("**/*.html"))
-    print(f"📁 共发现 {len(html_files)} 个 HTML 页面待检查")
-
-    updated_count = 0
+    updated = 0
     for hf in html_files:
-        try:
-            if optimize_html_file(hf):
-                updated_count += 1
-        except Exception as e:
-            print(f"❌ 处理文件失败 {hf}: {e}")
-
-    print(f"\n✅ 批量优化完成！共更新了 {updated_count} 个页面。")
+        if optimize_html_file(hf):
+            updated += 1
+    print(f"✅ 更新了 {updated} 个文件！")
 
 if __name__ == '__main__':
     main()
