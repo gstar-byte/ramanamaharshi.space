@@ -21,15 +21,36 @@
     <link rel="manifest" href="../manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg'http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🙏%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="author" content="室利·拉玛那·马哈希 (Sri Ramana Maharshi)">
     <link rel="canonical" href="https://ramanamaharshi.space/concepts/prana.html">
     <meta property="og:title" content="生命能 Prana — 呼吸与生命力｜拉玛那马哈希灵性智…">
     <meta property="og:description" content="生命能是宇宙的生命力量——呼吸、生命力与心智的关联。">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="zh_CN">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB"></script>
-    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MYFWHFPSYB');</script>
+    <!-- Google Analytics (延迟加载，彻底消除首屏带宽/CPU竞争) -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      function loadGA(){
+        if(window._gaLoaded) return;
+        window._gaLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-MYFWHFPSYB');
+      }
+      if('requestIdleCallback' in window){
+        requestIdleCallback(function(){ setTimeout(loadGA, 1500); });
+      } else {
+        window.addEventListener('load', function(){ setTimeout(loadGA, 1500); });
+      }
+      ['scroll','touchstart','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
+      });
+    </script>
     <meta name="publisher" content="拉玛那马哈希知识库">
     <link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/concepts/prana.html">
     <link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/concepts/prana.html">

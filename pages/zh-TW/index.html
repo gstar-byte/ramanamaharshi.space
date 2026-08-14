@@ -38,16 +38,28 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="拉玛那知識庫">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg'http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🙏%3C/text%3E%3C/svg%3E">
-    <!-- Google Analytics (异步加载，不阻塞渲染)  -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Google Analytics (延迟加载，彻底消除首屏带宽/CPU竞争) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-MYFWHFPSYB', {send_page_view: false});
-      window.addEventListener('load', function() {
-        gtag('event', 'page_view');
+      function loadGA(){
+        if(window._gaLoaded) return;
+        window._gaLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-MYFWHFPSYB');
+      }
+      if('requestIdleCallback' in window){
+        requestIdleCallback(function(){ setTimeout(loadGA, 1500); });
+      } else {
+        window.addEventListener('load', function(){ setTimeout(loadGA, 1500); });
+      }
+      ['scroll','touchstart','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
       });
     </script>
 
@@ -213,7 +225,7 @@
             <!-- 頁面內容  -->
             <div class="content-wrapper">
                 <header class="page-header">
-                    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:22px;opacity:0.6;">聲振寰宇的、距離我們時代最近、全球公認的最後一位至聖</p>
+                    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:22px;">聲振寰宇的、距離我們時代最近、全球公認的最後一位至聖</p>
                     <h1>🙏 拉瑪那馬哈希</h1>
                     <p style="color:var(--text-muted);margin-top:0.75rem;font-size:0.95rem;">傳承自印度阿魯那佳拉聖山 · 自我了悟之道</p>
                 </header>
@@ -354,7 +366,7 @@
                 <p><a href="index.html">拉瑪那馬哈希</a> | 傳承自印度阿魯那佳拉聖山</p>
                 <p style="margin-top:0.5rem;font-size:0.85rem;">本知識庫整合了18本核心著作，涵蓋問答、語錄、日記、傳記等多種形式</p>
                 <p style="margin-top:0.5rem; font-size:0.9rem; color: var(--text-muted);">© 2026 拉瑪那馬哈希. 保留所有權利。</p>
-                <p style="margin-top:1rem; font-size:0.9rem;"><a href="sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 網站地圖</a> <span style="margin: 0 1rem;">|</span> <a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">聯絡我</a></p>
+                <p style="margin-top:1rem; font-size:0.9rem;"><a href="sitemap.html" style="color: var(--text-muted); text-decoration: underline;">🌐 網站地圖</a> <span style="margin: 0 1rem;">|</span> <!--email_off--><a href="mailto:591611431@qq.com" style="color: var(--text-muted); text-decoration: underline;">聯絡我</a></p>
             </footer>
         </main>
     </div>
@@ -362,71 +374,7 @@
     
     
     <script>
-        // 搜索数据索引
-        const searchIndex = [
-            { type: 'book', title: '走向靜默，如你本来', url: 'books/be-as-you-are.html', excerpt: '馬哈希最核心的問答精選' },
-            { type: 'book', title: '宝钻集', url: 'books/gems.html', excerpt: '馬哈希语录精华' },
-            { type: 'book', title: '对谈录', url: 'books/talks.html', excerpt: '与馬哈希的對話记录' },
-            { type: 'book', title: '回到你心中', url: 'books/back-to-heart.html', excerpt: '回到真我本源的心法指引' },
-            { type: 'book', title: '日日与彼', url: 'books/day-by-day.html', excerpt: '弟子记录的馬哈希每日教示' },
-            { type: 'book', title: '面对面', url: 'books/face-to-face.html', excerpt: '馬哈希与求道者的對話实录' },
-            { type: 'book', title: '秘密印度', url: 'books/search-secret-india.html', excerpt: '保罗·布伦顿的朝圣记录' },
-            { type: 'book', title: '馬哈希福音', url: 'books/maharshi-gospel.html', excerpt: '馬哈希的靈性教导集' },
-            { type: 'book', title: '大瑜伽', url: 'books/maha-yoga.html', excerpt: '上师教法记录' },
-            { type: 'book', title: '上师言颂', url: 'books/guru-vachaka-kovai.html', excerpt: '馬哈希弟子编纂的精华语录' },
-            { type: 'concept', title: '真我 Atman', url: 'concepts/atman.html', excerpt: '最內在的存在本質' },
-            { type: 'concept', title: '梵 Brahman', url: 'concepts/brahman.html', excerpt: '宇宙终极實相' },
-            { type: 'concept', title: '心智 Citta', url: 'concepts/mind.html', excerpt: '意識的各种状态和活动' },
-            { type: 'concept', title: '自我 Ego', url: 'concepts/ego.html', excerpt: '虚假的个人身份认同' },
-            { type: 'concept', title: '摩耶 Maya', url: 'concepts/maya.html', excerpt: '幻相的力量' },
-            { type: 'concept', title: '我是谁', url: 'concepts/whoami.html', excerpt: '馬哈希最核心的參究法门' },
-            { type: 'concept', title: '解脫 Moksha', url: 'concepts/moksha.html', excerpt: '从束缚中彻底覺醒' },
-            { type: 'concept', title: '恩典 Grace', url: 'concepts/grace.html', excerpt: '上师的慈悲加持' },
-            { type: 'concept', title: '業力 Karma', url: 'concepts/karma.html', excerpt: '行为及其因果' },
-            { type: 'concept', title: '三摩地 Samadhi', url: 'concepts/samadhi.html', excerpt: '与真我合一的意識状态' },
-            { type: 'concept', title: '靜默 Silence', url: 'concepts/silence.html', excerpt: '馬哈希的核心教法' },
-            { type: 'concept', title: '臣服 Surrender', url: 'concepts/surrender.html', excerpt: '向真我臣服' },
-            { type: 'concept', title: '上师 Guru', url: 'concepts/guru.html', excerpt: '靈性导师' },
-            { type: 'person', title: '室利·拉玛那·馬哈希', url: 'persons/ramana.html', excerpt: '二十世纪最重要的靈性导师' },
-            { type: 'person', title: '大卫·高德曼', url: 'persons/david.html', excerpt: '知識庫创始人' },
-            { type: 'person', title: '韦卡罗达·南达', url: 'persons/venkataramana.html', excerpt: '馬哈希的姨妈' },
-            { type: 'method', title: '參究我是谁', url: 'methods/index.html', excerpt: '馬哈希的核心修行法门' },
-            { type: 'method', title: '臣服上师', url: 'methods/index.html', excerpt: '完全向真我臣服' },
-            { type: 'method', title: '念誦咒語', url: 'methods/index.html', excerpt: '持诵真我的名号' },
-            { type: 'method', title: '靜默修行', url: 'methods/index.html', excerpt: '體驗內在的靜默' },
-            { type: 'qa', title: '修行問答', url: 'qa/index.html', excerpt: '关于修行的问题与解答' },
-        ];
-        
-        function doSearch(query) {
-            const results = document.getElementById('search-results');
-            if (!query.trim()) {
-                results.innerHTML = '';
-                return;
-            }
-            
-            const q = query.toLowerCase();
-            const matches = searchIndex.filter(item => 
-                item.title.toLowerCase().includes(q) | 
-                item.excerpt.toLowerCase().includes(q)
-            );
-            
-            if (matches.length === 0) {
-                results.innerHTML = '<div style="padding:12px;color:#94a3b8;">未找到相关结果</div>';
-                return;
-            }
-            
-            const typeColors = { book: '#3b82f6', concept: '#8b5cf6', qa: '#10b981', person: '#f59e0b', method: '#ef4444' };
-            results.innerHTML = matches.map(item => `
-                <a href="${item.url}" style="display:block;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.1);text-decoration:none;">
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${typeColors[item.type]}20;color:${typeColors[item.type]};">${item.type === 'book' ? '书籍' : item.type === 'concept' ? '概念' : item.type === 'qa' ? '問答' : item.type === 'person' ? '人物' : '方法'}</span>
-                        <span style="color:#e2e8f0;font-weight:500;">${item.title}</span>
-                    </div>
-                    <div style="font-size:12px;color:#94a3b8;margin-top:4px;margin-left:44px;">${item.excerpt}</div>
-                </a>
-            `).join('');
-        }
-    </script>
+        </script>
     <!-- 合并后的主脚本（已包含搜索功能）  -->
     <script>
       if ('serviceWorker' in navigator) {

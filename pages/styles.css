@@ -17,6 +17,8 @@
     --border: #E0D6C8;
     --card: #FFFFFF;
     --link: #8B5E0B;
+    --primary: #8B5E0B;
+    --text-muted: #5c5650;
     
     /* 字体 */
     --serif: 'Noto Serif SC', 'Crimson Pro', Georgia, 'Times New Roman', serif;

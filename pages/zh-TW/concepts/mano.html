@@ -24,8 +24,29 @@
     <meta property="og:description" content="意是心智的主動運作層面——思考、欲望、意志的源頭。">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="zh_TW">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB"></script>
-    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MYFWHFPSYB');</script>
+    <!-- Google Analytics (延迟加载，彻底消除首屏带宽/CPU竞争) -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      function loadGA(){
+        if(window._gaLoaded) return;
+        window._gaLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-MYFWHFPSYB';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-MYFWHFPSYB');
+      }
+      if('requestIdleCallback' in window){
+        requestIdleCallback(function(){ setTimeout(loadGA, 1500); });
+      } else {
+        window.addEventListener('load', function(){ setTimeout(loadGA, 1500); });
+      }
+      ['scroll','touchstart','keydown','mousemove'].forEach(function(e){
+        window.addEventListener(e, loadGA, {once: true, passive: true});
+      });
+    </script>
     <meta name="publisher" content="拉玛那馬哈希知識庫">
     <link rel="alternate" hreflang="zh-CN" href="https://ramanamaharshi.space/concepts/mano.html">
     <link rel="alternate" hreflang="zh-TW" href="https://ramanamaharshi.space/zh-TW/concepts/mano.html">
