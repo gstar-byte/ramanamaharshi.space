@@ -21,7 +21,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="拉玛那知识库">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="robots" content="index, follow">
     <meta name="author" content="室利·拉玛那·马哈希 (Sri Ramana Maharshi)">
     <link rel="canonical" href="https://ramanamaharshi.space/concepts/bhakti.html">
@@ -121,17 +122,17 @@
     <meta name="twitter:image" content="https://ramanamaharshi.space/images/og-default.jpg">
 </head>
 <body>
-    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="打开侧边导航菜单">☰</button>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="layout">
 
 <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="../index.html" class="logo">🙏 拉玛那知识库</a>
-                <button class="sidebar-close-btn" title="收起侧边栏" style="visibility:hidden;opacity:0;">◀</button>
+                <button class="sidebar-close-btn" aria-label="收起侧边栏" title="收起侧边栏" style="visibility:hidden;opacity:0;">◀</button>
             </div>
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="搜索标题或内容..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="搜索标题或内容..." aria-label="搜索框: 搜索标题或内容..." autocomplete="off">
                 <div id="search-results"></div>
             </div>
             <div class="sidebar-section">
@@ -178,9 +179,9 @@
 
         <main class="main-content">
             <header class="topbar">
-                <button class="sidebar-open-btn" title="展开侧边栏">▶</button>
+                <button class="sidebar-open-btn" aria-label="展开侧边栏" title="展开侧边栏">▶</button>
                 <div class="topbar-left">
-                    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="切换侧边栏">☰</button>
                     <span class="topbar-title">💝 💝 奉爱/Bhakti</span>
                 </div>
                 <nav class="topbar-nav topbar-full">

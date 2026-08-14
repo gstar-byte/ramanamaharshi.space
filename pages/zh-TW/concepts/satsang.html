@@ -48,18 +48,18 @@
     <meta name="twitter:image" content="https://ramanamaharshi.space/images/og-default.jpg">
 </head>
 <body>
-    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="打开侧边导航菜单">☰</button>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="layout">
                 <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="../index.html" class="logo">🙏 拉瑪那知識庫</a>
-                <button class="sidebar-close-btn" title="收起侧边栏" style="visibility:hidden;opacity:0;">◀</button>
+                <button class="sidebar-close-btn" aria-label="收起侧边栏" title="收起侧边栏" style="visibility:hidden;opacity:0;">◀</button>
             </div>
 
             <!-- 搜索框  -->
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="搜索标题或內容..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="搜索标题或內容..." aria-label="搜索框: 搜索标题或內容..." autocomplete="off">
                 <div id="search-results"></div>
             </div>
 
@@ -116,7 +116,7 @@
         </aside>
         <main class="main-content">
             <header class="topbar">
-                <button class="sidebar-open-btn" title="展开侧边栏">▶</button><div class="topbar-left"><button class="menu-toggle" onclick="toggleSidebar()">☰</button><span class="topbar-title">🔮 聖者相聚</span></div><nav class="topbar-nav topbar-full"><a href="../index.html">首頁</a><a href="../books/index.html">書籍</a><a href="index.html" class="active">概念</a><a href="../methods/index.html">方法</a><a href="../qa/index.html">問答</a><a href="../persons/index.html">人物</a><a href="../graph.html">圖譜</a><a href="#" class="lang-toggle" style="border-left:1px solid rgba(255,255,255,.3);" title="切換爲簡體中文" onclick="location.href=location.pathname.replace('/zh-TW/','/');return false;">簡</a></nav></header>
+                <button class="sidebar-open-btn" aria-label="展开侧边栏" title="展开侧边栏">▶</button><div class="topbar-left"><button class="menu-toggle" onclick="toggleSidebar()" aria-label="切换侧边栏">☰</button><span class="topbar-title">🔮 聖者相聚</span></div><nav class="topbar-nav topbar-full"><a href="../index.html">首頁</a><a href="../books/index.html">書籍</a><a href="index.html" class="active">概念</a><a href="../methods/index.html">方法</a><a href="../qa/index.html">問答</a><a href="../persons/index.html">人物</a><a href="../graph.html">圖譜</a><a href="#" class="lang-toggle" style="border-left:1px solid rgba(255,255,255,.3);" title="切換爲簡體中文" onclick="location.href=location.pathname.replace('/zh-TW/','/');return false;">簡</a></nav></header>
             <div class="content-wrapper">
                 <nav class="breadcrumb"><a href="../index.html">首頁</a> / <a href="index.html">核心概念</a> / <span>🤝 聖者相聚 Satsang</span></nav>
                 <article class="concept-detail">

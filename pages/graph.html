@@ -249,6 +249,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="拉玛那知识库">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <!-- Google Analytics 预连接  -->
 <!-- Google tag (gtag.js) -->
@@ -303,7 +304,7 @@
     <meta name="twitter:image" content="https://ramanamaharshi.space/images/og-default.jpg">
 </head>
 <body>
-    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="打开侧边导航菜单">☰</button>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="layout">
 
@@ -314,7 +315,7 @@
             
             <!-- 搜索框  -->
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="搜索标题或内容..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="搜索标题或内容..." aria-label="搜索框: 搜索标题或内容..." autocomplete="off">
                 <div id="search-results"></div>
             </div>
             
