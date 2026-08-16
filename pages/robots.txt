@@ -4,4 +4,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://ramanamaharshi.space/sitemap.xml
-# 访客浏览网页版索引（有版式、非本 XML）: /sitemap.html ；繁体: /zh-TW/sitemap.html
+# LLMs.txt for AI agents: https://ramanamaharshi.space/llms.txt
