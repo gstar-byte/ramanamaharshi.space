@@ -9,6 +9,16 @@
   Cache-Control: max-age=0, must-revalidate
   Content-Type: application/javascript; charset=utf-8
 
+/llms.txt
+  Content-Type: text/markdown; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+
+/llms-full.txt
+  Content-Type: text/markdown; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+
 /sitemap.xml
   Cache-Control: max-age=3600, must-revalidate
   Content-Type: application/xml; charset=utf-8
@@ -57,13 +67,3 @@
 
 /*.json
   Cache-Control: public, max-age=60, must-revalidate
-
-/llms.txt
-  Content-Type: text/plain; charset=utf-8
-  Access-Control-Allow-Origin: *
-  Cache-Control: max-age=0, must-revalidate
-
-/llms-full.txt
-  Content-Type: text/plain; charset=utf-8
-  Access-Control-Allow-Origin: *
-  Cache-Control: max-age=0, must-revalidate
